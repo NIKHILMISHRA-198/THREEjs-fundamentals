@@ -1,6 +1,26 @@
 import * as THREE from 'three'
 import { Mesh } from 'three'
 import './style.css'
+import gsap from 'gsap'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+
+
+console.log(OrbitControls)
+/**
+ * Cursor
+ */
+
+const cursor =
+{
+    x: 0,
+    y: 0
+}
+
+window.addEventListener('mousemove', (event) => {
+    cursor.x = event.clientX / sizes.width - 0.5
+    cursor.y = -(event.clientY / sizes.height)
+})
+
 
 //Scene
 const scene = new THREE.Scene()
@@ -66,7 +86,7 @@ group.add(cube1)
 //Axes helper (creates x y and z axis)
 // const axesHelper = new THREE.AxesHelper()
 // scene.add(axesHelper)
-
+const canvas = document.querySelector('canvas.webgl')
 //Sizes
 
 const sizes = {
@@ -75,13 +95,22 @@ const sizes = {
 }
 
 //Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000)
+
+
+
 camera.position.z = 3
-// camera.position.x = 1
-// camera.position.y = 1
+camera.lookAt(cube1.position)
+
 scene.add(camera)
 
 // camera.lookAt(mesh.position)
+
+//Controls
+
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+
 //Renderer
 
 const renderer = new THREE.WebGLRenderer({
@@ -91,28 +120,31 @@ renderer.setSize(sizes.width, sizes.height)
 
 //Clock
 const clock = new THREE.Clock()
-
+// gsap.to(cube1.position, { duration: 1, delay: 2, y: 1 })
+// gsap.to(cube1.position, { duration: 1, delay: 3, x: 1 })
 //Animations
 
 const tick = () => {
-
     //Clock
     const elapsedTime = clock.getElapsedTime()
 
     //Update Object
-    cube1.rotation.y = Math.cos(elapsedTime)
-    cube1.rotation.x = Math.sin(elapsedTime)
+    // cube1.rotation.y = elapsedTime
+    // cube1.rotation.x = elapsedTime
 
     // cube1.position.y = Math.cos(elapsedTime)
     // cube1.position.x = Math.sin(elapsedTime)
 
+    //Update camera
 
-    camera.position.x = Math.sin(elapsedTime)
-    camera.position.y = Math.cos(elapsedTime)
+    // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3
+    // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3
+    // camera.position.y = Math.cos(cursor.y * Math.PI * 2) * 3
 
-    camera.lookAt(cube1.position)
+    // camera.lookAt(new THREE.Vector3())
 
-
+    // Update Controls
+    controls.update()
     //Render
     renderer.render(scene, camera)
 

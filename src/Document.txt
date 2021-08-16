@@ -97,7 +97,63 @@ can render the surrounding for things like environment map, reflection or shadow
 We will be using OrthographicCamera and PerspectiveCamera
 
 
-
+_____________________________________________________________________________________________
 THREE.PerspectiveCamera( 45, width / height, 1, 1000 );
+
+
+Field Of view"
+*Vertical vision angle
+*In degrees
+*also called fov
+
+
+Aspect ratio:   (Width of the render)/ (height of the render)
+
+near and frame:  how close/far the camera can see.
+
+_____________________________________________________________________________________________
+
+THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );
+
+THREE.OrthographicCamera(left, right, top, bottom, near, far)
+
+//Cursor assignment
+
+const cursor =
+{
+    x: 0,
+    y: 0
+}
+
+window.addEventListener('mousemove', (event) => {
+    cursor.x = event.clientX / sizes.width - 0.5
+    cursor.y = event.clientY / sizes.height
+})
+
+_____________________________________________________________________________________________
+
+Move the camera around the center of the scene by using Math.sin(...),Math.cos(...) and Math.Position
+
+_____________________________________________________________________________________________
+
+
+//Controls
+
+1. DeviceOrientationControls
+2. FlyControls
+3. FirstPersonControl
+4. OrbitControls
+5. PointerLockControl
+6. TrackballControls
+7. TransformControls
+8. DragControls
+
+//The damping will smooth the animation by adding some kind of acceleration and friction
+
+To enable damping, switch the enableDamping property to true
+
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+ remember to add controls.add inside tick() function!!
 _____________________________________________________________________________________________
 

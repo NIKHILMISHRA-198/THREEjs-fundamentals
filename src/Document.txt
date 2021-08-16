@@ -65,4 +65,39 @@ const tick=  () => {
 
 If you want to have more control, create tweens,  create timelines etc. use GSAP like libraries.
 
+//using GSAP
+
+gsap.to(mesh.position, {duration: 1, x: 2})
+
+const tick=  () => {
+    //Render
+
+    renderer.render(scene, camera)
+
+    //call tick again on the next frame
+    window.requestAnimationFrame(tick)
+}
+tick()
+
+_____________________________________________________________________________________________
+//Camera is an abstract class, You are not supposed to use it directly
+
+//ArrayCamera render the scene from multiple cameras on specific areas of the render
+
+//StereoCamera render the scene through two camera that mimic the eyes to create a parallax effect
+Use with device like VR headset, red and blue glasses or cardboard
+
+//Cubecamera do 6 renders, each one facing a different direction 
+can render the surrounding for things like environment map, reflection or shadow map
+
+//OrthographicCamera render the scene without perspective
+
+//PerspectiveCamera the scenewith perspective
+
+We will be using OrthographicCamera and PerspectiveCamera
+
+
+
+THREE.PerspectiveCamera( 45, width / height, 1, 1000 );
+_____________________________________________________________________________________________
 

@@ -90,9 +90,42 @@ const canvas = document.querySelector('canvas.webgl')
 //Sizes
 
 const sizes = {
-    width: 800,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 }
+
+window.addEventListener('resize', () => {
+    //update size of the window on change!
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
+
+    //Update camera
+
+    camera.aspect = sizes.width / sizes.height
+
+    camera.updateProjectionMatrix()
+
+    //Update Renderer
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+// window.addEventListener('dbclick', () => {
+//     const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+
+//     if (!fullscreenElement) {
+//         if (canvas.requestFullscreen()) {
+//             canvas.requestFullscreen()
+//         }
+//         else if (canvas.webkitRequestFullscreen()) {
+//             canvas.webkitRequestFullscreen()
+//         }
+
+//     }
+//     else if (document.exitFullscreen) {
+//         document.exitFullscreen()
+//     }
+// })
 
 //Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000)
@@ -117,6 +150,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('canvas.webgl')
 })
 renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 //Clock
 const clock = new THREE.Clock()

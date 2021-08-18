@@ -1,4 +1,4 @@
-There are 4 Properties to transform Objects
+/*There are 4 Properties to transform Objects
 
 *position
 *scale
@@ -156,4 +156,62 @@ const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
  remember to add controls.add inside tick() function!!
 _____________________________________________________________________________________________
+
+
+Full Screen and resizing!
+
+
+some might have blue outline on the cancas when drag and dropping
+Fix that with outline: none;
+
+.webgl {
+    position:fixed;
+    top:0;
+    left:0;
+    outline: none;
+}
+
+
+Handle resize
+window.addEventListener('resize', () => {
+    console.log('window has been resized')
+})
+
+
+When changing the properties like aspect, we need to call
+camera.updateProjectionMatrix()
+
+window.addEventListener('resize', () => {
+    //...
+
+    camera.updateProjectionMatrix()
+})
+
+Full screen byy double clicking anywhere!!
+
+window.addEventListener('dbclick, () => {
+    if(!docuement.fullscreenElement)
+    {
+        canvas.requestFullscreen()
+    }
+    else if (canvas.webkitRequestFullscreen()
+    {
+
+    }
+})
+
+_____________________________________________________________________________________________
+*/
+//What is GEOMETRY in THREEjs ?
+
+/**
+ *Composed of Vertices (coordinates in 3d spaces) and faces (triangles that join those vertices to create a surface)
+ *  All the following geometries inherit from Geometry
+
+
+
+ * 
+ * 
+ *  
+ */
 

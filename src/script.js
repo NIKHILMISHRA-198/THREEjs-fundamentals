@@ -3,9 +3,21 @@ import { Mesh } from 'three'
 import './style.css'
 import gsap from 'gsap'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as dat from 'dat.gui'
+
+/*
+ *Debug 
+ */
+const gui = new dat.GUI({ closed: true })
+const parameters = {
+    color: 0x5976a,
+    spin: () => {
+        gsap.to(mesh.rotation, { duration: 5, y: mesh.rotation.y + Math.PI * 2 })
+    }
+}
 
 
-console.log(OrbitControls)
+
 /**
  * Cursor
  */
@@ -27,40 +39,32 @@ const scene = new THREE.Scene()
 
 //Object
 
-const group = new THREE.Group()
-scene.add(group)
+const geometry = new THREE.BoxGeometry()
+const material = new THREE.MeshBasicMaterial({ color: parameters.color })
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
 
-const cube1 = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ color: 0xff0000 })
-)
+//debug
 
-group.add(cube1)
+gui
+    .add(mesh.position, 'y')
+    .min(-3)
+    .max(3)
+    .step(0.01)
+    .name("elevation")
+gui
+    .add(mesh, 'visible')
 
-// const cube2 = new THREE.Mesh(
-//     new THREE.BoxGeometry(1, 1, 1),
-//     new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-// )
-// cube2.position.x = -2
+gui
+    .add(material, 'wireframe')
 
-// group.add(cube2)
-
-
-
-// const cube3 = new THREE.Mesh(
-//     new THREE.BoxGeometry(1, 1, 1),
-//     new THREE.MeshBasicMaterial({ color: 0x0000ff })
-// )
-// cube3.position.x = 2
-
-// group.add(cube3)
-
-// const geometry = new THREE.BoxGeometry(1, 1, 1)
-// const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-// const mesh = new THREE.Mesh(geometry, material)
-
-
-// scene.add(mesh)
+gui
+    .addColor(parameters, 'color')
+    .onChange(() => {
+        material.color.set(parameters.color)
+    })
+gui
+    .add(parameters, 'spin')
 
 // //Position
 
@@ -133,7 +137,7 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 10
 
 
 camera.position.z = 3
-camera.lookAt(cube1.position)
+camera.lookAt(mesh.position)
 
 scene.add(camera)
 
